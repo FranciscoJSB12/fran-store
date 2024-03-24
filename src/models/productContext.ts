@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { ProductType } from "./product";
 import type { OrderType } from "./order";
+import { PickedProductType } from "./pickedProduct";
 
 export interface ProductContextType {
   products: ProductType[];
@@ -16,8 +17,8 @@ export interface ProductContextType {
   setIsCheckoutSideMenuOpen: Dispatch<SetStateAction<boolean>>;
   product: ProductType;
   setProduct: Dispatch<SetStateAction<ProductType>>;
-  shoppingCart: ProductType[];
-  setShoppingCart: Dispatch<SetStateAction<ProductType[]>>;
+  shoppingCart: PickedProductType[];
+  setShoppingCart: Dispatch<SetStateAction<PickedProductType[]>>;
   order: OrderType[];
   setOrder: Dispatch<SetStateAction<OrderType[]>>;
   loading: boolean;

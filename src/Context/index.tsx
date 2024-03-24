@@ -1,7 +1,8 @@
 import { useState, useEffect, createContext, ReactNode } from "react";
 import { categories } from "../utils/navbarCategories";
-import type { ProductType } from "../models/product";
 import type { ProductContextType } from "../models/productContext";
+import type { ProductType } from "../models/product";
+import { PickedProductType } from "../models/pickedProduct";
 import type { OrderType } from "../models/order";
 
 interface PropType {
@@ -10,7 +11,7 @@ interface PropType {
 
 const getLastCategory = (): string => {
   const lastCategory = localStorage.getItem("lastCategory");
-  return !lastCategory ? categories.all : lastCategory;
+  return !lastCategory ? categories.all.toLowerCase() : lastCategory;
 };
 
 export const ShoppingCartContext = createContext({} as ProductContextType);
@@ -22,7 +23,7 @@ export const ShoppingCartProvider = ({ children }: PropType) => {
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   const [product, setProduct] = useState({} as ProductType);
-  const [shoppingCart, setShoppingCart] = useState<ProductType[]>([]);
+  const [shoppingCart, setShoppingCart] = useState<PickedProductType[]>([]);
   const [order, setOrder] = useState<OrderType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

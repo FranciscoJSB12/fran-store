@@ -13,7 +13,9 @@ export const NavItem = ({ children, href, clickHandler }: PropType) => {
   return (
     <NavLink
       to={href}
-      className={({ isActive }) => (isActive ? activeStyle : "")}
+      className={({ isActive }) =>
+        isActive ? activeStyle + " text-gray-700" : "text-gray-700"
+      }
       onClick={clickHandler}
     >
       {children}

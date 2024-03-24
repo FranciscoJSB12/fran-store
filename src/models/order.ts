@@ -1,8 +1,8 @@
-import type { ProductType } from "./product";
+import type { PickedProductType } from "./pickedProduct";
 
 export interface OrderType {
   date: string;
-  products: ProductType[];
+  products: PickedProductType[];
   totalProducts: number;
   totalPrice: number;
 }

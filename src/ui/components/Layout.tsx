@@ -6,7 +6,7 @@ interface PropType {
 
 const Layout = ({ children }: PropType) => {
   return (
-    <section className="flex flex-col items-center mt-20 pt-10 pb-20">
+    <section className="flex flex-col items-center mt-[80px] mb-20 px-5">
       {children}
     </section>
   );

@@ -30,28 +30,24 @@ const Navbar = () => {
 
   return (
     <>
+      <header className="w-full h-[60px] px-5 flex items-center fixed top-0 left-0 z-10 bg-blue-600">
+        <p>
+          <Bars4Icon className="h-6 w-6 text-white" onClick={toggleMenu} />
+        </p>
+      </header>
       <nav
         className={`w-full ${
-          isMenuActive && "h-screen"
-        } flex flex-col fixed top-0 left-0 z-10 bg-white border-b border-b-black`}
+          isMenuActive ? "h-[calc(100vh-60px)]" : "hidden"
+        } pt-5 flex flex-col fixed top-[60px] left-0 z-10 bg-white`}
       >
-        <ul className="p-5">
-          <li>
-            <Bars4Icon className="h-8 w-8 text-black" onClick={toggleMenu} />
-          </li>
-        </ul>
-        <ul
-          className={`flex flex-col items-center gap-6 pb-5 ${
-            !isMenuActive && "hidden"
-          }`}
-        >
+        <ul className="flex flex-col items-center gap-6 pb-5">
           <li>
             <NavLink
               to="/home"
-              className="font-semibold text-lg"
+              className="font-semibold text-lg text-gray-700"
               onClick={() => saveLastCategory(categories.all)}
             >
-              Shopi
+              franStore
             </NavLink>
           </li>
           <li>
@@ -64,20 +60,16 @@ const Navbar = () => {
           </li>
           {renderNavbarCategories(saveLastCategory)}
         </ul>
-        <ul
-          className={`flex flex-col items-center gap-6 pb-5 ${
-            !isMenuActive && "hidden"
-          }`}
-        >
+        <ul className="flex flex-col items-center gap-6 pb-5">
           <li></li>
         </ul>
       </nav>
       <aside
-        className="w-14 h-14 border border-black rounded-full fixed right-5 bottom-5 bg-white z-10 flex justify-center items-center cursor-pointer"
+        className="w-14 h-14 rounded-full fixed right-5 bottom-5 bg-blue-600 z-10 flex justify-center items-center cursor-pointer"
         onClick={() => setIsCheckoutSideMenuOpen((current) => !current)}
       >
-        <ShoppingBagIcon className="h-6 w-6 text-black" />
-        <span>{shoppingCart.length}</span>
+        <ShoppingBagIcon className="h-6 w-6 text-white" />
+        <span className="text-white">{shoppingCart.length}</span>
       </aside>
     </>
   );

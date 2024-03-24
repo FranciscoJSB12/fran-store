@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ShoppingCartContext } from "../../Context";
@@ -24,16 +24,19 @@ const CheckoutSideMenu = () => {
 
   const saveOrder = (): void => {
     const newOrder = {
-      date: "01.01.23",
+      date: "",
       products: shoppingCart,
       totalProducts: shoppingCart.length,
       totalPrice: totalPrice(shoppingCart),
     };
-
-    setOrder([...order, newOrder]);
+    setOrder((prev) => [...prev, newOrder]);
     setShoppingCart([]);
     setIsCheckoutSideMenuOpen(false);
   };
+
+  useEffect(() => {
+    if (order.length > 0) console.table(order[order.length - 1].products);
+  }, [order]);
 
   return (
     <aside
@@ -66,12 +69,12 @@ const CheckoutSideMenu = () => {
             ${totalPrice(shoppingCart)}
           </span>
         </p>
-        <Link to="/my-orders/last">
+        <Link to="/">
           <button
-            className="w-full h-14 rounded-lg bg-black text-white text-lg"
+            className="w-full h-14 rounded-lg bg-blue-600 text-white text-lg"
             onClick={() => saveOrder()}
           >
-            Checkout
+            Buy
           </button>
         </Link>
       </div>
