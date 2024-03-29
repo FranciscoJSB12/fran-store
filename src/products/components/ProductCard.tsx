@@ -1,13 +1,13 @@
 import { useContext, MouseEvent } from "react";
 import { PlusIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartContext } from "../../Context";
+import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
 import type { ProductType } from "../../models/product";
 
 interface PropType {
   product: ProductType;
 }
 
-const Card = ({ product }: PropType) => {
+export const ProductCard = ({ product }: PropType) => {
   const {
     isProductDetailOpen,
     setIsProductDetailOpen,
@@ -31,7 +31,7 @@ const Card = ({ product }: PropType) => {
     product: ProductType
   ): void => {
     event.stopPropagation();
-    setShoppingCart((prev) => [...prev, { ...product, quantity: 1 }]);
+    setShoppingCart((prev) => [...prev, { ...product }]);
     setIsCheckoutSideMenuOpen(true);
     if (isProductDetailOpen) {
       setIsProductDetailOpen(false);
@@ -61,10 +61,10 @@ const Card = ({ product }: PropType) => {
 
   return (
     <div
-      className="bg-white cursor-pointer w-64 m-auto shadow-2xl"
+      className="bg-white cursor-pointer w-72 shadow-2xl"
       onClick={() => openProductDetail(product)}
     >
-      <figure className="w-64 h-64 relative">
+      <figure className="w-72 h-64 relative">
         <img
           src={product.image}
           className="w-full h-full rounded-t-lg object-cover"
@@ -82,5 +82,3 @@ const Card = ({ product }: PropType) => {
     </div>
   );
 };
-
-export default Card;

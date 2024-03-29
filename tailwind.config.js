@@ -3,10 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      xs: { min: "300px", max: "599px" },
-      sm: "600px",
-      md: "768px",
-      lg: "1024px",
+      sm: "384px",
+      md: "576px",
+      lg: "864px",
+      xlg: "1232px",
     },
     extend: {},
   },

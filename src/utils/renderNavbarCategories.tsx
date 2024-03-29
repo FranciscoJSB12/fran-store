@@ -1,5 +1,5 @@
 import { categories } from "./navbarCategories";
-import { NavItem } from "../ui/components/NavItem";
+import { NavItem } from "../ui/NavItem";
 
 type clickHandlerType = (item: string) => void;
 

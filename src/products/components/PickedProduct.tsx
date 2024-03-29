@@ -1,16 +1,17 @@
 import { useState, useContext, useEffect } from "react";
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartContext } from "../../Context/index";
-import { ProductType } from "../../models/product";
+import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
+import { getLastCount } from "../../utils/getLastCount";
+import type { ProductType } from "../../models/product";
 
 interface PropType {
   product: ProductType;
   deleteProduct?: (id: string) => void;
 }
 
-const OrderCard = ({ product, deleteProduct }: PropType) => {
+export const PickedProduct = ({ product, deleteProduct }: PropType) => {
   const { setShoppingCart } = useContext(ShoppingCartContext);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(() => getLastCount(product.id));
 
   const DecrementCount = () => {
     setCount((prev) => {
@@ -79,5 +80,3 @@ const OrderCard = ({ product, deleteProduct }: PropType) => {
     </div>
   );
 };
-
-export default OrderCard;

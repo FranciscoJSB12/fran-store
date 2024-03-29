@@ -4,17 +4,19 @@ import { NavLink } from "react-router-dom";
 interface PropType {
   children: ReactNode;
   href: string;
-  clickHandler: () => void;
+  clickHandler?: () => void;
 }
 
-const activeStyle = "underline underline-offset-4";
+const activeStyle = " text-white bg-blue-600 px-24 py-2 rounded-lg";
+
+const inActiveStyle = "text-gray-700 xlg:text-white block";
 
 export const NavItem = ({ children, href, clickHandler }: PropType) => {
   return (
     <NavLink
       to={href}
       className={({ isActive }) =>
-        isActive ? activeStyle + " text-gray-700" : "text-gray-700"
+        isActive ? inActiveStyle + activeStyle : inActiveStyle
       }
       onClick={clickHandler}
     >

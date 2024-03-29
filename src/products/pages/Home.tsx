@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { CgSpinnerTwo } from "react-icons/cg";
-import { ShoppingCartContext } from "../../Context";
+import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
 import { categories } from "../../utils/navbarCategories";
-import Layout from "../../ui/components/Layout";
-import CardContainer from "../components/CardContainer";
-import Card from "../components/Card";
-import ProductDetail from "../components/ProductDetail";
+import { Layout } from "../../ui/Layout";
+import { ProductGrid } from "../components/ProductGrid";
+import { ProductCard } from "../components/ProductCard";
+import { ProductDetail } from "../components/ProductDetail";
 
-const Home = () => {
+export const Home = () => {
   const {
     searchValue,
     setSearchValue,
@@ -23,11 +23,11 @@ const Home = () => {
 
   if (items.length > 0) {
     data = (
-      <CardContainer>
+      <ProductGrid>
         {items.map((product) => (
-          <Card product={product} key={product.id} />
+          <ProductCard product={product} key={product.id} />
         ))}
-      </CardContainer>
+      </ProductGrid>
     );
   } else {
     data = <p className="mt-4 text-2xl font-light">No prodructs found</p>;
@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <h1 className="text-gray-800 text-lg font-medium mb-4">
+      <h1 className="text-gray-800 text-lg font-medium mb-4 italic">
         {category !== categories.all.toLowerCase()
           ? category.replace(/\b[a-z]/, (l) => l.toUpperCase())
           : "Home"}
@@ -49,7 +49,7 @@ const Home = () => {
         placeholder="Search"
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}
-        className="w-full max-w-[400px] px-4 py-3 mb-4 shadow-lg rounded-full border border-gray-400 focus:outline-none"
+        className="w-10/12 max-w-sm px-4 py-3 mb-4 shadow-lg rounded-full border border-gray-400 focus:outline-none"
       />
       {loading && (
         <div className="mt-10">
@@ -67,5 +67,3 @@ const Home = () => {
     </Layout>
   );
 };
-
-export default Home;

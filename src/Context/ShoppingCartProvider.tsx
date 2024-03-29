@@ -1,18 +1,15 @@
 import { useState, useEffect, createContext, ReactNode } from "react";
-import { categories } from "../utils/navbarCategories";
 import type { ProductContextType } from "../models/productContext";
 import type { ProductType } from "../models/product";
-import { PickedProductType } from "../models/pickedProduct";
+import type { PickedProductType } from "../models/pickedProduct";
 import type { OrderType } from "../models/order";
+import { categories } from "../utils/navbarCategories";
+import { getLastCategory } from "../utils/getLastCategory";
+import { getLastShoppingCart } from "../utils/getLastShoppingCart";
 
 interface PropType {
   children: ReactNode;
 }
-
-const getLastCategory = (): string => {
-  const lastCategory = localStorage.getItem("lastCategory");
-  return !lastCategory ? categories.all.toLowerCase() : lastCategory;
-};
 
 export const ShoppingCartContext = createContext({} as ProductContextType);
 
@@ -23,7 +20,8 @@ export const ShoppingCartProvider = ({ children }: PropType) => {
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   const [product, setProduct] = useState({} as ProductType);
-  const [shoppingCart, setShoppingCart] = useState<PickedProductType[]>([]);
+  const [shoppingCart, setShoppingCart] =
+    useState<PickedProductType[]>(getLastShoppingCart);
   const [order, setOrder] = useState<OrderType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter";
-import { ShoppingCartProvider } from "./Context";
+import { ShoppingCartProvider } from "./Context/ShoppingCartProvider";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
