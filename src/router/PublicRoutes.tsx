@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 interface PrivateRouteType {
@@ -7,7 +7,5 @@ interface PrivateRouteType {
 
 export const PublicRoutes = ({ children }: PrivateRouteType) => {
   //Extraer del contexto si el usuario está autenticado o no
-  const [logged, setLogged] = useState(true);
-
-  return !logged ? children : <Navigate to="/home" />;
+  return false ? children : <Navigate to="/home" />;
 };

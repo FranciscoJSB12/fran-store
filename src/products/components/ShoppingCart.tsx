@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
 import { totalPrice } from "../../utils/calculateTotalPrice";

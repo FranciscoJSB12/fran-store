@@ -43,7 +43,7 @@ export const Navbar = () => {
       <nav
         className={`w-full max-w-sm ${
           isMenuActive ? "h-[calc(100vh-60px)]" : "hidden"
-        } pt-5 flex flex-col fixed top-[60px] left-0 z-20 bg-white xlg:flex xlg:bg-blue-800 xlg:h-screen xlg:top-0 xlg:w-72`}
+        } pt-5 flex flex-col fixed top-[60px] left-0 z-20 overflow-y-scroll bg-white xlg:flex xlg:bg-blue-800 xlg:h-screen xlg:top-0 xlg:w-72 xlg:overflow-y-hidden`}
       >
         <ul className="flex flex-col items-center gap-6 pb-5">
           <li className="hidden xlg:block">
