@@ -21,7 +21,7 @@ export const LastOrder = () => {
         </p>
         <a
           className="bg-green-400 w-60 py-2 block text-center text-white cursor-pointer rounded-lg mx-auto mt-5"
-          href={`https://wa.me/584121930005/?text=${setMessage(rdnNumber)}`}
+          href={`https://wa.me/?text=${setMessage(rdnNumber)}`}
         >
           Go to Whatsapp
         </a>

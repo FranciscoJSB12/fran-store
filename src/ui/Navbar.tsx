@@ -73,9 +73,6 @@ export const Navbar = () => {
           <li>
             <NavItem href="/orders">My orders</NavItem>
           </li>
-          <li>
-            <NavItem href="/">Sign out</NavItem>
-          </li>
         </ul>
       </nav>
       {isMenuActive && <TransparentBackground />}
