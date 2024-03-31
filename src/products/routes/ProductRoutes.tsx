@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../pages/Home";
-import { ShoppingBagButton } from "../../ui/ShoppingCartButton";
+import { ShoppingCart } from "../components/ShoppingCart";
+import { ShoppingBagButton } from "../components/ShoppingCartButton";
 
 export const ProductRoutes = () => {
   return (
     <>
+      <ShoppingCart />
       <ShoppingBagButton />
       <Routes>
         <Route path="/home" element={<Home />} />

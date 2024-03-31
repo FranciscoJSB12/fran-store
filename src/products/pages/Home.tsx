@@ -1,68 +1,44 @@
-import { useContext } from "react";
-import { CgSpinnerTwo } from "react-icons/cg";
-import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
-import { categories } from "../../utils/navbarCategories";
+import { useEffect, useState, ChangeEvent } from "react";
+import { useAppSelector, useAppDispatch, getProducts } from "../../store";
 import { Layout } from "../../ui/Layout";
-import { ProductGrid } from "../components/ProductGrid";
-import { ProductCard } from "../components/ProductCard";
+import { Spinner } from "../../ui/Spinner";
+import { ErrorComponent } from "../../ui/ErrorComponent";
+import { SearchBar } from "../../ui/SearchBar";
 import { ProductDetail } from "../components/ProductDetail";
+import { categories } from "../../utils/navbarCategories";
+import { renderData } from "../utils/renderData";
 
 export const Home = () => {
-  const {
-    searchValue,
-    setSearchValue,
-    renderProducts,
-    loading,
-    error,
-    category,
-  } = useContext(ShoppingCartContext);
+  const [searchValue, setSearchValue] = useState("");
+  const products = useAppSelector((state) => state.products);
+  const category = useAppSelector((state) => state.category.currentCategory);
+  const dispatch = useAppDispatch();
 
-  const items = renderProducts();
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSearchValue(e.target.value.toLowerCase());
+  };
 
-  let data: JSX.Element;
-
-  if (items.length > 0) {
-    data = (
-      <ProductGrid>
-        {items.map((product) => (
-          <ProductCard product={product} key={product.id} />
-        ))}
-      </ProductGrid>
-    );
-  } else {
-    data = <p className="mt-4 text-2xl font-light">No prodructs found</p>;
-  }
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
 
   return (
     <Layout>
       <h1 className="text-gray-800 text-lg font-medium mb-4 italic">
-        {category !== categories.all.toLowerCase()
-          ? category.replace(/\b[a-z]/, (l) => l.toUpperCase())
-          : "Home"}
+        {category === categories.all.toLowerCase()
+          ? "Home"
+          : category.replace(/\b[a-z]/, (l) => l.toUpperCase())}
       </h1>
-      <label className="text-gray-700 text-md mb-2" htmlFor="search">
-        Search products
-      </label>
-      <input
-        id="search"
-        type="text"
-        placeholder="Search"
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
-        className="w-10/12 max-w-sm px-4 py-3 mb-4 shadow-lg rounded-full border border-gray-400 focus:outline-none"
-      />
-      {loading && (
-        <div className="mt-10">
-          <CgSpinnerTwo className="h-24 w-24 animate-spin text-blue-600" />
-          <p className="mt-4 text-lg text-gray-700 font-light">Loading...</p>
-        </div>
-      )}
-      {error && (
-        <p className="mt-4 text-md text-gray-700 font-light text-center">
-          Error loading products🤕😕
-        </p>
-      )}
-      {!loading && !error && data}
+
+      <SearchBar value={searchValue} changeHandler={changeHandler} />
+
+      {products.isLoading && <Spinner />}
+
+      {products.error && <ErrorComponent />}
+
+      {!products.isLoading &&
+        !products.error &&
+        renderData(products.allProducts, category, searchValue)}
       <ProductDetail />
     </Layout>
   );

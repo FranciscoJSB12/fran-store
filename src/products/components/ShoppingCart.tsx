@@ -1,66 +1,62 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
+import {
+  useAppDispatch,
+  useAppSelector,
+  closeShoppingCart,
+  deleteProductInShoppingCart,
+  setOrder,
+} from "../../store";
 import { totalPrice } from "../../utils/calculateTotalPrice";
 import { PickedProduct } from "./PickedProduct";
 import { TransparentBackground } from "../../ui/TransparentBackground";
-import { saveShoppingCart } from "../../utils/saveShoppingCart";
+import { setLastShoppingCart } from "../../utils/setLastShoppingCart";
 
 export const ShoppingCart = () => {
-  const {
-    isCheckoutSideMenuOpen,
-    setIsCheckoutSideMenuOpen,
-    shoppingCart,
-    setShoppingCart,
-    setOrder,
-  } = useContext(ShoppingCartContext);
-
+  const shoppingCart = useAppSelector((state) => state.shoppingCart);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const deleteProduct = (id: string): void => {
-    const index = shoppingCart.findIndex((item) => item.id === id);
-    const productList = [...shoppingCart];
-    productList.splice(index, 1);
-    setShoppingCart(productList);
+    dispatch(deleteProductInShoppingCart(id));
   };
 
   const saveOrder = (): void => {
     const newOrder = {
       date: `${Date.now()}`,
-      products: shoppingCart,
-      totalProducts: shoppingCart.length,
-      totalPrice: totalPrice(shoppingCart),
+      products: [...shoppingCart.products],
+      totalProducts: shoppingCart.products.length,
+      totalPrice: totalPrice(shoppingCart.products),
     };
-    setOrder((prev) => [...prev, newOrder]);
-    setShoppingCart([]);
-    setIsCheckoutSideMenuOpen(false);
 
-    navigate("/orders/last");
+    dispatch(setOrder(newOrder));
+
+    navigate("/my-order");
   };
 
   useEffect(() => {
-    saveShoppingCart("lastShoppingCart", shoppingCart);
-  }, [shoppingCart]);
+    setLastShoppingCart("lastShoppingCart", shoppingCart.products);
+  }, [shoppingCart.products]);
 
   return (
     <>
       <aside
         className={`${
-          !isCheckoutSideMenuOpen ? "hidden" : ""
+          !shoppingCart.isOpen ? "hidden" : ""
         } w-full max-w-sm h-screen flex flex-col fixed top-0 right-0 z-20 bg-white`}
       >
         <div className="w-full p-6 flex justify-between items-center">
           <h1 className="text-gray-700 text-xl font-medium">My Order</h1>
           <div
             className="cursor-pointer"
-            onClick={() => setIsCheckoutSideMenuOpen(false)}
+            onClick={() => dispatch(closeShoppingCart())}
           >
             <XMarkIcon className="h-6 w-6 text-black" />
           </div>
         </div>
         <div className="px-6 overflow-y-scroll flex-1">
-          {shoppingCart.map((product) => (
+          {shoppingCart.products.map((product) => (
             <PickedProduct
               product={product}
               key={product.id}
@@ -72,7 +68,7 @@ export const ShoppingCart = () => {
           <p className="flex flex-row justify-between items-center m-4">
             <span className="font-light">Total:</span>
             <span className="font-medium text-2xl">
-              ${totalPrice(shoppingCart)}
+              ${totalPrice(shoppingCart.products)}
             </span>
           </p>
           <button
@@ -83,7 +79,7 @@ export const ShoppingCart = () => {
           </button>
         </div>
       </aside>
-      {isCheckoutSideMenuOpen && <TransparentBackground />}
+      {shoppingCart.isOpen && <TransparentBackground />}
     </>
   );
 };

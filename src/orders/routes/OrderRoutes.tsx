@@ -1,13 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import { MyOrders } from "../pages/MyOrders";
-import { LastOrder } from "../pages/LastOrder";
+import { MyOrder } from "../pages/MyOrder";
 
 export const OrderRoutes = () => {
   return (
     <>
       <Routes>
-        <Route index element={<MyOrders />} />
-        <Route path="/last" element={<LastOrder />} />
+        <Route index element={<MyOrder />} />
       </Routes>
     </>
   );

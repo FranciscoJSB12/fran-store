@@ -1,6 +1,6 @@
 import type { PickedProductType } from "../models/pickedProduct";
 
-export const saveShoppingCart = (
+export const setLastShoppingCart = (
   name: string,
   shoppingCart: PickedProductType[]
 ) => {

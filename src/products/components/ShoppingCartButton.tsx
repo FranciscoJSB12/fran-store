@@ -1,17 +1,16 @@
-import { useContext } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartContext } from "../Context/ShoppingCartProvider";
+import { useAppDispatch, useAppSelector, openShoppingCart } from "../../store";
 
 export const ShoppingBagButton = () => {
-  const { shoppingCart, setIsCheckoutSideMenuOpen } =
-    useContext(ShoppingCartContext);
+  const shoppingCart = useAppSelector((state) => state.shoppingCart);
+  const dispatch = useAppDispatch();
   return (
     <aside
       className="w-14 h-14 rounded-full fixed right-5 bottom-5 bg-blue-800 z-10 flex justify-center items-center cursor-pointer"
-      onClick={() => setIsCheckoutSideMenuOpen((current) => !current)}
+      onClick={() => dispatch(openShoppingCart())}
     >
       <ShoppingBagIcon className="h-6 w-6 text-white" />
-      <span className="text-white">{shoppingCart.length}</span>
+      <span className="text-white">{shoppingCart.products.length}</span>
     </aside>
   );
 };

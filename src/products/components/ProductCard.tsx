@@ -1,6 +1,11 @@
-import { useContext, MouseEvent } from "react";
+import { MouseEvent } from "react";
 import { PlusIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
+import {
+  useAppSelector,
+  useAppDispatch,
+  setProductDetail,
+  setProductInShoppingCart,
+} from "../../store";
 import type { ProductType } from "../../models/product";
 
 interface PropType {
@@ -8,22 +13,11 @@ interface PropType {
 }
 
 export const ProductCard = ({ product }: PropType) => {
-  const {
-    isProductDetailOpen,
-    setIsProductDetailOpen,
-    isCheckoutSideMenuOpen,
-    setIsCheckoutSideMenuOpen,
-    setProduct,
-    shoppingCart,
-    setShoppingCart,
-  } = useContext(ShoppingCartContext);
+  const shoppingCart = useAppSelector((state) => state.shoppingCart);
+  const dispatch = useAppDispatch();
 
   const openProductDetail = (product: ProductType): void => {
-    setIsProductDetailOpen(true);
-    if (isCheckoutSideMenuOpen) {
-      setIsCheckoutSideMenuOpen(false);
-    }
-    setProduct(product);
+    dispatch(setProductDetail(product));
   };
 
   const addProductToCart = (
@@ -31,15 +25,11 @@ export const ProductCard = ({ product }: PropType) => {
     product: ProductType
   ): void => {
     event.stopPropagation();
-    setShoppingCart((prev) => [...prev, { ...product }]);
-    setIsCheckoutSideMenuOpen(true);
-    if (isProductDetailOpen) {
-      setIsProductDetailOpen(false);
-    }
+    dispatch(setProductInShoppingCart(product));
   };
 
   const renderIcon = (product: ProductType): JSX.Element => {
-    const isInCart = shoppingCart.some((item) => item.id === product.id);
+    const isInCart = shoppingCart.products.some((p) => p.id === product.id);
 
     if (!isInCart) {
       return (

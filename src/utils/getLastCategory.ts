@@ -1,7 +1,9 @@
 import { categories } from "./navbarCategories";
 
+const allItems = categories.all.toLowerCase();
+
 export const getLastCategory = (): string => {
   const lastCategory = localStorage.getItem("lastCategory");
-  if (!lastCategory) return categories.all.toLowerCase();
+  if (!lastCategory) return allItems;
   return lastCategory;
 };

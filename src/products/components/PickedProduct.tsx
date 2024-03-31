@@ -1,17 +1,16 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartContext } from "../../Context/ShoppingCartProvider";
-import { getLastCount } from "../../utils/getLastCount";
-import type { ProductType } from "../../models/product";
+import { useAppDispatch, updateProductCountInShoppingCart } from "../../store";
+import type { PickedProductType } from "../../models/pickedProduct";
 
 interface PropType {
-  product: ProductType;
-  deleteProduct?: (id: string) => void;
+  product: PickedProductType;
+  deleteProduct: (id: string) => void;
 }
 
 export const PickedProduct = ({ product, deleteProduct }: PropType) => {
-  const { setShoppingCart } = useContext(ShoppingCartContext);
-  const [count, setCount] = useState(() => getLastCount(product.id));
+  const dispatch = useAppDispatch();
+  const [count, setCount] = useState(product.quantity);
 
   const DecrementCount = () => {
     setCount((prev) => {
@@ -25,12 +24,7 @@ export const PickedProduct = ({ product, deleteProduct }: PropType) => {
   };
 
   useEffect(() => {
-    setShoppingCart((products) => {
-      return products.map((p) => {
-        if (p.id !== product.id) return p;
-        return { ...p, quantity: count };
-      });
-    });
+    dispatch(updateProductCountInShoppingCart({ id: product.id, count }));
   }, [count]);
 
   return (
@@ -48,14 +42,12 @@ export const PickedProduct = ({ product, deleteProduct }: PropType) => {
         </div>
         <div className="flex justify-between items-center gap-2">
           <p className="text-lg font-medium">${product.price}</p>
-          {deleteProduct && (
-            <div
-              className="cursor-pointer"
-              onClick={() => deleteProduct(product.id)}
-            >
-              <XMarkIcon className="h-6 w-6 text-black" />
-            </div>
-          )}
+          <div
+            className="cursor-pointer"
+            onClick={() => deleteProduct(product.id)}
+          >
+            <XMarkIcon className="h-6 w-6 text-black" />
+          </div>
         </div>
       </div>
       <div className="flex justify-between">
