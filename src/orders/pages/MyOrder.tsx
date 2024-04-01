@@ -53,7 +53,7 @@ export const MyOrder = () => {
             Edit
           </button>
           <button className="bg-green-500 text-white w-28 py-2 rounded-lg">
-            Confirm
+            Buy
           </button>
         </section>
       </main>
