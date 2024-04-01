@@ -66,7 +66,7 @@ export const PickedProduct = ({ product, deleteProduct }: PropType) => {
           </button>
         </div>
         <div>
-          <p>Quantity: {count}</p>
+          <p>Amount: {count}</p>
         </div>
       </div>
     </div>

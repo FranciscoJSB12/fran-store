@@ -7,7 +7,12 @@ interface OrderState {
 }
 
 const initialState: OrderState = {
-  currentOrder: {} as OrderType,
+  currentOrder: {
+    date: "",
+    products: [],
+    totalProducts: 0,
+    totalPrice: 0,
+  },
 };
 
 export const orderSlice = createSlice({

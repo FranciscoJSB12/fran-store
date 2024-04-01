@@ -12,6 +12,7 @@ import { totalPrice } from "../../utils/calculateTotalPrice";
 import { PickedProduct } from "./PickedProduct";
 import { TransparentBackground } from "../../ui/TransparentBackground";
 import { setLastShoppingCart } from "../../utils/setLastShoppingCart";
+import type { PickedProductType } from "../../models/pickedProduct";
 
 export const ShoppingCart = () => {
   const shoppingCart = useAppSelector((state) => state.shoppingCart);
@@ -22,11 +23,15 @@ export const ShoppingCart = () => {
     dispatch(deleteProductInShoppingCart(id));
   };
 
+  const getTotalProducts = (products: PickedProductType[]): number => {
+    return products.reduce((sum, p) => sum + p.quantity, 0);
+  };
+
   const saveOrder = (): void => {
     const newOrder = {
       date: `${Date.now()}`,
       products: [...shoppingCart.products],
-      totalProducts: shoppingCart.products.length,
+      totalProducts: getTotalProducts(shoppingCart.products),
       totalPrice: totalPrice(shoppingCart.products),
     };
 

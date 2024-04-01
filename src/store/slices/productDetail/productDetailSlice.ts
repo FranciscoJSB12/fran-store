@@ -8,7 +8,14 @@ export interface ProductDetailState {
 }
 
 const initialState: ProductDetailState = {
-  currentProduct: {} as ProductType,
+  currentProduct: {
+    id: "",
+    category: "",
+    description: "",
+    name: "",
+    image: "",
+    price: "",
+  },
   isOpen: false,
 };
 
