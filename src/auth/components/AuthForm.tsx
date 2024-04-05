@@ -1,6 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from "react";
+import { useAppDispatch, logIn } from "../../store";
+import { useNavigate } from "react-router-dom";
 import { AuthInput } from "./AuthInput";
 import { SubmitBtn } from "./SubmitBtn";
+import { categories } from "../../utils/navbarCategories";
 
 interface AuthFormProps {
   isLoggingIn: boolean;
@@ -15,6 +18,8 @@ interface AuthFormState {
 
 export const AuthForm = ({ isLoggingIn }: AuthFormProps) => {
   const [inputs, setInputs] = useState({} as AuthFormState);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -22,7 +27,13 @@ export const AuthForm = ({ isLoggingIn }: AuthFormProps) => {
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputs);
+    dispatch(logIn());
+    const lastCategory = localStorage.getItem("lastCategory");
+    if (lastCategory) {
+      navigate(
+        lastCategory !== categories.all.toLowerCase() ? `/${lastCategory}` : "/"
+      );
+    }
   };
 
   return (

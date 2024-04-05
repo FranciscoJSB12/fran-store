@@ -8,5 +8,6 @@ interface PrivateRouteType {
 
 export const PrivateRoute = ({ children }: PrivateRouteType) => {
   const { isUserAuthenticated } = useAppSelector((state) => state.auth);
+
   return isUserAuthenticated ? children : <Navigate to="/" />;
 };

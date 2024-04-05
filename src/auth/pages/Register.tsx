@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Layout } from "../../ui/Layout";
 import { AuthForm } from "../components/AuthForm";
 
@@ -10,7 +11,10 @@ export const Register = () => {
         </h1>
         <AuthForm isLoggingIn={false} />
         <h2 className="text-center text-gray-700 mt-5 italic">
-          Have an account already? <strong>Log in</strong>
+          Have an account already?{" "}
+          <Link to="/auth/log-in">
+            <strong className="underline hover:text-blue-900">Log in</strong>
+          </Link>
         </h2>
       </main>
     </Layout>

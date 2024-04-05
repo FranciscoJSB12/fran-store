@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  useAppDispatch,
-  useAppSelector,
-  setCategory,
-  logIn,
-  logOut,
-} from "../store";
+import { useAppDispatch, useAppSelector, setCategory, logOut } from "../store";
 import { NavbarHeader } from "./NavbarHeader";
 import { NavItem } from "./NavItem";
 import { TransparentBackground } from "./TransparentBackground";
@@ -85,13 +79,13 @@ export const Navbar = () => {
               <NavItem href="/my-order">My order</NavItem>
             ) : (
               <NavItem href="/auth/log-in">
-                <span onClick={() => dispatch(logIn())}> Log in</span>
+                <span>Log in</span>
               </NavItem>
             )}
           </li>
           {isUserAuthenticated && (
             <li>
-              <NavItem href="/">
+              <NavItem href="/auth/log-in">
                 <span onClick={() => dispatch(logOut())}>Log Out</span>
               </NavItem>
             </li>
