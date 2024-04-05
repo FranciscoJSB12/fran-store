@@ -5,6 +5,7 @@ import {
   productDetailSlice,
   shoppingCartSlice,
   orderSlice,
+  authSlice,
 } from "./slices";
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     productDetail: productDetailSlice.reducer,
     shoppingCart: shoppingCartSlice.reducer,
     orders: orderSlice.reducer,
+    auth: authSlice.reducer,
   },
 });
 

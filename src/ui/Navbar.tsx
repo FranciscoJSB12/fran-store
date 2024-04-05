@@ -1,21 +1,24 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useAppSelector, useAppDispatch, setCategory } from "../store";
+import {
+  useAppDispatch,
+  useAppSelector,
+  setCategory,
+  logIn,
+  logOut,
+} from "../store";
 import { NavbarHeader } from "./NavbarHeader";
 import { NavItem } from "./NavItem";
 import { TransparentBackground } from "./TransparentBackground";
 import { categories } from "../utils/navbarCategories";
 import { renderNavbarCategories } from "../utils/renderNavbarCategories";
-import { setLastCategory } from "../utils/setLastCategory";
 
 export const Navbar = () => {
-  const category = useAppSelector((state) => state.category.currentCategory);
+  const { isUserAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [isNavbarActive, setIsNavbarActive] = useState(false);
 
-  const toggleMenu = (): void => {
-    setIsNavbarActive((prev) => !prev);
-  };
+  const toggleMenu = (): void => setIsNavbarActive((prev) => !prev);
 
   const scrollToPageTop = (): void => {
     window.scrollTo({
@@ -28,13 +31,15 @@ export const Navbar = () => {
   const saveLastCategory = (category: string): void => {
     const selectedCategory = category.toLowerCase();
     dispatch(setCategory(selectedCategory));
+    localStorage.setItem("lastCategory", selectedCategory);
     setIsNavbarActive(false);
     scrollToPageTop();
   };
 
   useEffect(() => {
-    setLastCategory("lastCategory", category);
-  }, [category]);
+    const lastCategory = localStorage.getItem("lastCategory");
+    if (!!lastCategory) dispatch(setCategory(lastCategory));
+  }, []);
 
   return (
     <>
@@ -69,11 +74,28 @@ export const Navbar = () => {
 
         <ul className="flex flex-col items-center gap-6 py-5">
           <li>
-            <NavItem href="/my-account">My account</NavItem>
+            {isUserAuthenticated ? (
+              <NavItem href="/auth/my-account">My account</NavItem>
+            ) : (
+              <NavItem href="/auth/register">Register</NavItem>
+            )}
           </li>
           <li>
-            <NavItem href="/my-order">My order</NavItem>
+            {isUserAuthenticated ? (
+              <NavItem href="/my-order">My order</NavItem>
+            ) : (
+              <NavItem href="/auth/log-in">
+                <span onClick={() => dispatch(logIn())}> Log in</span>
+              </NavItem>
+            )}
           </li>
+          {isUserAuthenticated && (
+            <li>
+              <NavItem href="/">
+                <span onClick={() => dispatch(logOut())}>Log Out</span>
+              </NavItem>
+            </li>
+          )}
         </ul>
       </nav>
       {isNavbarActive && <TransparentBackground hiddenAfterStreching={true} />}

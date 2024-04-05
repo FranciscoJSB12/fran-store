@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -11,11 +11,12 @@ import {
 import { totalPrice } from "../../utils/calculateTotalPrice";
 import { PickedProduct } from "./PickedProduct";
 import { TransparentBackground } from "../../ui/TransparentBackground";
-import { setLastShoppingCart } from "../../utils/setLastShoppingCart";
 import type { PickedProductType } from "../../models/pickedProduct";
 
 export const ShoppingCart = () => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const shoppingCart = useAppSelector((state) => state.shoppingCart);
+  const { isUserAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -28,6 +29,11 @@ export const ShoppingCart = () => {
   };
 
   const saveOrder = (): void => {
+    if (!isUserAuthenticated) {
+      setIsAlertOpen(true);
+      return;
+    }
+
     const newOrder = {
       date: `${Date.now()}`,
       products: [...shoppingCart.products],
@@ -41,7 +47,8 @@ export const ShoppingCart = () => {
   };
 
   useEffect(() => {
-    setLastShoppingCart("lastShoppingCart", shoppingCart.products);
+    const currentProducts = JSON.stringify(shoppingCart.products);
+    localStorage.setItem("lastShoppingCart", currentProducts);
   }, [shoppingCart.products]);
 
   return (
@@ -85,6 +92,27 @@ export const ShoppingCart = () => {
         </div>
       </aside>
       {shoppingCart.isOpen && <TransparentBackground />}
+      {isAlertOpen && (
+        <aside className="w-11/12 max-w-80 h-48 flex flex-col items-center justify-center fixed top-0 right-0 bottom-0 left-0 m-auto z-30 bg-white rounded-lg border border-blue-900">
+          <p className="italic text-gray-600 text-lg">
+            Register or Log in to continue
+          </p>
+          <div className="mt-5">
+            <button
+              className="bg-blue-700 w-24 py-1 rounded-lg text-white mr-5"
+              onClick={() => navigate("/auth/register")}
+            >
+              Register
+            </button>
+            <button
+              className="bg-blue-700 w-24 py-1 rounded-lg text-white mr-5"
+              onClick={() => navigate("auth/register")}
+            >
+              Log In
+            </button>
+          </div>
+        </aside>
+      )}
     </>
   );
 };

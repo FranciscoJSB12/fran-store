@@ -9,9 +9,9 @@ export const AppRouter = () => {
     <>
       <Navbar />
       <Routes>
-        <Route path="/*" element={<ProductRoutes />} />
+        <Route path="auth/*" element={<AuthRoutes />} />
         <Route path="my-order/*" element={<OrderRoutes />} />
-        <Route path="my-account/*" element={<AuthRoutes />} />
+        <Route path="/*" element={<ProductRoutes />} />
       </Routes>
     </>
   );

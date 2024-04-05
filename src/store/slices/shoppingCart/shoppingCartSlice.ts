@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLastShoppingCart } from "../../../utils/getLastShoppingCart";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { ProductType } from "../../../models/product";
 import type { PickedProductType } from "../../../models/pickedProduct";
@@ -10,7 +9,7 @@ export interface ShoppingCartState {
 }
 
 const initialState: ShoppingCartState = {
-  products: getLastShoppingCart(),
+  products: [],
   isOpen: false,
 };
 

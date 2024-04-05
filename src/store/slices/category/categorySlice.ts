@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getLastCategory } from "../../../utils/getLastCategory";
+import { categories } from "../../../utils/navbarCategories";
 
 export interface CategoryState {
   currentCategory: string;
 }
 
 const initialState: CategoryState = {
-  currentCategory: getLastCategory(),
+  currentCategory: categories.all.toLowerCase(),
 };
 
 export const categorySlice = createSlice({
