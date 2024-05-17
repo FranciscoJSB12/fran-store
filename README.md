@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+# Ecommerce Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción
 
-Currently, two official plugins are available:
+El presente proyecto consiste en un sitio web desarrollado para la venta de multiples categorías de productos, donde el usuario puede crear sus ordenes de compra para el posterior pago de las mismas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologías empleadas
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- TailwindCSS
+- Typescript
+- Redux toolkit
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Cómo instalar y correr el proyecto.
 
-- Configure the top-level `parserOptions` property like this:
+### Primeramente, clone el proyecto del repositorio de GitHub:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+git clone url
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Luego instale las dependencias requeridas corriendo en su terminal:
+
+```
+npm install
+```
+
+### Para correr el proyecto en modo de desarrollo ejecute el comando:
+
+```
+npm run dev
+```
+
+### En caso de correr el proyecto en modo de producción, primero genere el build:
+
+```
+npm run build
+```
+
+### Abra su navegador de preferencia y escriba:
+
+```
+localhost:5173
+```
+
+## Otros scripts
+
+### Para ejecutar el linter corrar en su terminal el siguiente comando:
+
+```
+npm run lint
+```
